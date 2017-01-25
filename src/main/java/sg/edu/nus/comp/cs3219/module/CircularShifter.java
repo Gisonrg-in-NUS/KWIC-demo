@@ -1,7 +1,6 @@
 package sg.edu.nus.comp.cs3219.module;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -49,9 +48,9 @@ public class CircularShifter implements Observer {
 			if (isIgnoreWord(line.getWord(i))) {
 				continue;
 			}
-			List<String> newLine = Stream
+			String newLine = Stream
 					.concat(line.getWordsFromIndexToEnd(i).stream(), line.getWordsFromStartToIndex(i).stream())
-					.collect(Collectors.toList());
+					.collect(Collectors.joining(" "));
 			resultStorage.addLine(newLine);
 		}
 	}

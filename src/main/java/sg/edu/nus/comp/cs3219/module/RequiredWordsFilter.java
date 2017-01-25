@@ -1,35 +1,40 @@
 package sg.edu.nus.comp.cs3219.module;
 
+import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 import sg.edu.nus.comp.cs3219.event.LineStorageChangeEvent;
 import sg.edu.nus.comp.cs3219.model.Line;
 import sg.edu.nus.comp.cs3219.model.LineStorage;
 
-public class Alphabetizer implements Observer {
+public class RequiredWordsFilter implements Observer {
+	final private LineStorage resultStorage;
+	private Set<String> requiredWords = new HashSet<>();
+
+	public RequiredWordsFilter(LineStorage storage) {
+		resultStorage = storage;
+	}
+	
+	public void setRequiredWords(Set<String> requiredWordSet) {
+		requiredWords = requiredWordSet;
+	}
+
 	@Override
 	public void update(Observable o, Object arg) {
 		LineStorage storage = (LineStorage) o;
 		LineStorageChangeEvent event = (LineStorageChangeEvent) arg;
-		Line line = storage.get(event.getChangedLine());
 		switch (event.getEventType()) {
 		case ADD:
-			line.capitalizeFirstWord();
-			alphabetize(storage, line, event.getChangedLine());
+			Line line = storage.get(event.getChangedLine());
+
+			// TODO: add filtered result to result storage
+			
 			break;
 		default:
 			break;
 		}
 	}
 
-	private void alphabetize(LineStorage storage, Line line, int lineNumber) {
-		for (int i = 0; i <= (lineNumber - 1); i++) {
-			if (line.compareTo(storage.get(i)) < 0) {
-				storage.insert(i, line);
-				storage.delete(lineNumber + 1);
-				break;
-			}
-		}
-	}
 }

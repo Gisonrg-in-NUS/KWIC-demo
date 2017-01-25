@@ -15,7 +15,8 @@ public class UiController {
 		List<String> getInput();
 		String[] getInputArray();
 		JTextArea getOutputTextArea();
-		Set<String> getIgnoreWords();
+		Set<String> getIgnoredWords();
+		Set<String> getRequiredWords();
 		void setResutls(List<String> results);
 		void setController(UiController controller);
 	}
@@ -30,8 +31,9 @@ public class UiController {
 	}
 	
 	public void generateResult() {
-		Set<String> ignoreWordsSet = view.getIgnoreWords();
-		List<String> result = controller.run(view.getInput(), ignoreWordsSet);
+		Set<String> ignoredWordsSet = view.getIgnoredWords();
+		Set<String> requiredWordsSet = view.getRequiredWords();
+		List<String> result = controller.run(view.getInput(), ignoredWordsSet, requiredWordsSet);
 		view.setResutls(result);
 	}
 

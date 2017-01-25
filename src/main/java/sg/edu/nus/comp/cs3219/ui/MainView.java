@@ -33,6 +33,7 @@ public class MainView extends JFrame implements KwicUi {
 
 	private JTextArea linesInput;
 	private JTextArea ignoreWordsInput;
+	private JTextArea requiredWordsInput;
 	private JTextArea resultsOutput;
 	private JButton generateButton;
 	private JButton clearAllButton;
@@ -55,10 +56,11 @@ public class MainView extends JFrame implements KwicUi {
 		JPanel mainPanel = new JPanel(new GridLayout(0, 2));
 		
 		// Left Panel
-		JPanel userInputPanel = new JPanel(new GridLayout(2, 0));
+		JPanel userInputPanel = new JPanel(new GridLayout(3, 0));
 		userInputPanel.setPreferredSize(new Dimension(400, 480));
 		JPanel linesInputPanel = new JPanel();
 		JPanel ignoreWordsInputPanel = new JPanel();
+		JPanel requiredWordsInputPanel = new JPanel();
 		
 		// Right Panel
 		JPanel rightPanel = new JPanel(new GridBagLayout());
@@ -69,7 +71,7 @@ public class MainView extends JFrame implements KwicUi {
 
 		// Lines input
 		linesInputPanel.setBorder(new TitledBorder(new EtchedBorder(), "Lines Input"));
-		linesInput = new JTextArea(12, 30);
+		linesInput = new JTextArea(8, 30);
 		linesInput.setEditable(true);
 		JScrollPane linesInputScroll = new JScrollPane(linesInput);
 		linesInputScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -77,14 +79,23 @@ public class MainView extends JFrame implements KwicUi {
 
 		// Ignore words input
 		ignoreWordsInputPanel.setBorder(new TitledBorder(new EtchedBorder(), "Words Ignored"));
-		ignoreWordsInput = new JTextArea(12, 30);
+		ignoreWordsInput = new JTextArea(8, 30);
 		ignoreWordsInput.setEditable(true);
 		JScrollPane ignoreWordsInputScroll = new JScrollPane(ignoreWordsInput);
 		ignoreWordsInputScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		ignoreWordsInputPanel.add(ignoreWordsInputScroll);
+		
+		// Required words input
+		requiredWordsInputPanel.setBorder(new TitledBorder(new EtchedBorder(), "Words Required"));
+		requiredWordsInput = new JTextArea(8, 30);
+		requiredWordsInput.setEditable(true);
+		JScrollPane requiredWordsInputScroll = new JScrollPane(requiredWordsInput);
+		requiredWordsInputScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		requiredWordsInputPanel.add(requiredWordsInputScroll);
 
 		userInputPanel.add(linesInputPanel);
 		userInputPanel.add(ignoreWordsInputPanel);
+		userInputPanel.add(requiredWordsInputPanel);
 
 		// Results output
 		resultPanel.setBorder(new TitledBorder(new EtchedBorder(), "Results"));
@@ -175,7 +186,7 @@ public class MainView extends JFrame implements KwicUi {
 	}
 
 	@Override
-	public Set<String> getIgnoreWords() {
+	public Set<String> getIgnoredWords() {
 		String ignoreWords = ignoreWordsInput.getText();
 		String[] ignoreWordsList = ignoreWords.split("\n");
 		Set<String> ignoreWordsSet = new HashSet<>();
@@ -183,6 +194,18 @@ public class MainView extends JFrame implements KwicUi {
 			ignoreWordsSet.add(word.toLowerCase());
 		}
 		return ignoreWordsSet;
+	}
+	
+
+	@Override
+	public Set<String> getRequiredWords() {
+		String requiredWords = requiredWordsInput.getText();
+		String[] requiredWordsList = requiredWords.split("\n");
+		Set<String> requiredWordsSet = new HashSet<>();
+		for (String word : requiredWordsList) {
+			requiredWordsSet.add(word.toLowerCase());
+		}
+		return requiredWordsSet;
 	}
 
 	@Override

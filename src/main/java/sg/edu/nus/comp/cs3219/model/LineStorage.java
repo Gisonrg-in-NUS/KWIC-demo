@@ -11,9 +11,8 @@ import sg.edu.nus.comp.cs3219.event.LineStorageChangeEvent.LineStorageChangeType
 public class LineStorage extends Observable {
 
 	private List<Line> lines = new ArrayList<>();
-
-	public void addLine(List<String> line) {
-		Line newLine = new Line(line);
+	
+	public void addLine(Line newLine) {
 		lines.add(newLine);
 		setChanged();
 		notifyObservers(new LineStorageChangeEvent(LineStorageChangeType.ADD, getLastIndex()));
