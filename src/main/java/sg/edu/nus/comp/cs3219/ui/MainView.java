@@ -13,12 +13,10 @@ import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
@@ -105,13 +103,6 @@ public class MainView extends JFrame implements KwicUi {
 		outputDisplayScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		resultPanel.add(outputDisplayScroll);
 		
-		// Architecture selection
-		ButtonGroup group = new ButtonGroup();
-		JRadioButton archit1 = new JRadioButton("Implict Invocation");
-		archit1.setSelected(true);
-	    group.add(archit1);
-	    architectureSelectionPanel.add(archit1);
-	    
 		// Operation area
 		generateButton = new JButton("Generate");
 		clearAllButton = new JButton("Clear All");
@@ -191,19 +182,18 @@ public class MainView extends JFrame implements KwicUi {
 		String[] ignoreWordsList = ignoreWords.split("\n");
 		Set<String> ignoreWordsSet = new HashSet<>();
 		for (String word : ignoreWordsList) {
-			ignoreWordsSet.add(word.toLowerCase());
+			ignoreWordsSet.add(word);
 		}
 		return ignoreWordsSet;
 	}
 	
-
 	@Override
 	public Set<String> getRequiredWords() {
 		String requiredWords = requiredWordsInput.getText();
 		String[] requiredWordsList = requiredWords.split("\n");
 		Set<String> requiredWordsSet = new HashSet<>();
 		for (String word : requiredWordsList) {
-			requiredWordsSet.add(word.toLowerCase());
+			requiredWordsSet.add(word);
 		}
 		return requiredWordsSet;
 	}

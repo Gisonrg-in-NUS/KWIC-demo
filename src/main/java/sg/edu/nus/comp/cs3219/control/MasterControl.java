@@ -2,6 +2,7 @@ package sg.edu.nus.comp.cs3219.control;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import sg.edu.nus.comp.cs3219.model.LineStorage;
 import sg.edu.nus.comp.cs3219.module.Alphabetizer;
@@ -39,11 +40,11 @@ public class MasterControl {
 		intermediateLines.clearLines();
 		resultLines.clearLines();
 
-		// Set ignore words
-		shifter.setIgnoreWords(ignoredWords);
+		// Set ignore words (make them lowercase for comparison)
+		shifter.setIgnoreWords(this.transformSetToLowercase(ignoredWords));
 		
-		// Set required words
-		filter.setRequiredWords(requiredWords);
+		// Set required words (make them lowercase for comparison)
+		filter.setRequiredWords(this.transformSetToLowercase(requiredWords));
 		
 		// Add data line by line
 		for (String line : input) {
@@ -51,5 +52,11 @@ public class MasterControl {
 		}
 		
 		return resultLines.getAll();
+	}
+	
+	private Set<String> transformSetToLowercase(Set<String> set) {
+		return set.stream()
+                .map(String::toLowerCase)
+                .collect(Collectors.toSet());
 	}
 }
